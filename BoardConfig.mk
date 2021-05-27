@@ -95,9 +95,6 @@ else
 endif
 #---
 
-# Assert
-TARGET_OTA_ASSERT_DEVICE := curtana,joyeuse,gram,excalibur
-
 # Avb
 BOARD_AVB_ENABLE := true
 BOARD_AVB_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
