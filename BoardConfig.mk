@@ -157,3 +157,7 @@ TW_EXCLUDE_TWRPAPP := true
 TW_NO_SCREEN_BLANK := true
 PLATFORM_VERSION := 16.1.0
 #
+# For MIUI 12.x Android 11 decryption - uncomment these two lines if your build/core/Makefile has not been patched to do it
+#BOARD_AVB_RECOVERY_ADD_HASH_FOOTER_ARGS += \
+#    --prop com.android.build.boot.security_patch:$(PLATFORM_SECURITY_PATCH)
+#
