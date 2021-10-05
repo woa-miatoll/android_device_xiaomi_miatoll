@@ -76,7 +76,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	# maximum permissible splash image size (in kilobytes); do *NOT* increase!
 	export OF_SPLASH_MAX_SIZE=104
 
-	# run a process after formatting data to work-around MTP issues
+	# run a process after formatting data to recreate /data/media/0 (only when forced-encryption is being disabled)
 	export OF_RUN_POST_FORMAT_PROCESS=1
 
 	# let's see what are our build VARs
