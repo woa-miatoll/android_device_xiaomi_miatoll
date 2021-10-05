@@ -91,7 +91,7 @@ ifeq ($(FOX_VARIANT),MIUI)
 # Yuki kernel, built from source
 else
    BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo.img
-   TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image.gz
+   TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image.gz-dtb
 endif
 #---
 
