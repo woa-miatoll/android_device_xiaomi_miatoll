@@ -17,6 +17,6 @@ remove_redundancies() {
   fi
 }
 
-remove_redundancies;
+# remove_redundancies;
 exit 0;
 #
