@@ -1,6 +1,6 @@
 #
 #	This file is part of the OrangeFox Recovery Project
-# 	Copyright (C) 2020-2021 The OrangeFox Recovery Project
+# 	Copyright (C) 2020-2022 The OrangeFox Recovery Project
 #
 #	OrangeFox is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -21,17 +21,10 @@
 # dynamic partition stuff
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# Exclude Apex, for A12 ROMs?
+# Exclude Apex
 TW_EXCLUDE_APEX := true
 
-# Reserve 64MB in dynamic partitions
-#BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 67108864
-#BOARD_VENDORIMAGE_PARTITION_RESERVED_SIZE := 67108864
-
-# use twrp-common for decryption
-BOARD_USES_QCOM_FBE_DECRYPTION := true
-
-PRODUCT_PACKAGES_ENG += \
+PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe
 
@@ -43,4 +36,59 @@ PRODUCT_PACKAGES += \
 # OEM otacert
 PRODUCT_EXTRA_RECOVERY_KEYS += \
     vendor/recovery/security/miui
+#
+# for Android 11 manifests
+PRODUCT_SOONG_NAMESPACES += \
+    vendor/qcom/opensource/commonsys-intf/display
+
+PRODUCT_SHIPPING_API_LEVEL := 29
+
+# crypto
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+BOARD_USES_METADATA_PARTITION := true
+BOARD_USES_QCOM_FBE_DECRYPTION := true
+PLATFORM_VERSION := 127
+PLATFORM_SECURITY_PATCH := 2127-12-31
+PRODUCT_ENFORCE_VINTF_MANIFEST := true
+
+VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+
+# Vibrator
+#TW_SUPPORT_INPUT_AIDL_HAPTICS := true
+
+# Recovery
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+#TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
+
+
+#TARGET_RECOVERY_DEVICE_MODULES += libion libandroidicu vendor.display.config@1.0 vendor.display.config@2.0 libdisplayconfig.qti
+TARGET_RECOVERY_DEVICE_MODULES += \
+    libandroidicu \
+    libcap \
+    libion \
+    libpcrecpp \
+    libxml2
+
+TW_OVERRIDE_SYSTEM_PROPS := \
+    "ro.build.product;ro.build.fingerprint=ro.system.build.fingerprint;ro.build.version.incremental;ro.product.device=ro.product.system.device;ro.product.model=ro.product.system.model;ro.product.name=ro.product.system.name"
+
+RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libcap.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpcrecpp.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so
+
+#
+#RECOVERY_LIBRARY_SOURCE_FILES += \
+#    $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
+#    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
+#    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so \
+#    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/libdisplayconfig.qti.so
+
+#PRODUCT_COPY_FILES += \
+#    $(OUT_DIR)/target/product/miatoll/obj/SHARED_LIBRARIES/libandroidicu_intermediates/libandroidicu.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libandroidicu.so
 #

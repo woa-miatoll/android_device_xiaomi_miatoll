@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2019 The TwrpBuilder Open-Source Project
 #
-# Copyright (C) 2020-2021 OrangeFox Recovery Project
+# Copyright (C) 2020-2022 OrangeFox Recovery Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -86,8 +86,10 @@ BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIRECTORY)/dtbs
 
 # stock miui kernel (V12.0.3.0.QJWMIXM_20210117)
 ifeq ($(FOX_VARIANT),MIUI)
+   KERNEL_DIRECTORY := $(DEVICE_PATH)/MIUI
    BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo
    TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/kernel
+   BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIRECTORY)/dtb
 # Yuki kernel, built from source
 else
    BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo.img
@@ -125,18 +127,9 @@ TARGET_COPY_OUT_VENDOR := vendor
 
 # Recovery
 BOARD_HAS_LARGE_FILESYSTEM := true
-TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
-
-# Crypto
-PLATFORM_SECURITY_PATCH := 2099-12-31
-VENDOR_SECURITY_PATCH := 2099-12-31
-TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_CRYPTO_FBE := true
-TW_INCLUDE_FBE_METADATA_DECRYPT := true
-BOARD_USES_METADATA_PARTITION := true
 
 # haptics
-TW_SUPPORT_INPUT_1_2_HAPTICS := true
+#TW_SUPPORT_INPUT_1_2_HAPTICS := true
 
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
@@ -155,9 +148,14 @@ TARGET_USES_LOGD := true
 TARGET_USES_MKE2FS := true
 TW_EXCLUDE_TWRPAPP := true
 TW_NO_SCREEN_BLANK := true
-PLATFORM_VERSION := 16.1.0
-#
-# For MIUI 12.x Android 11 decryption - uncomment these two lines if your build/core/Makefile has not been patched to do it
-#BOARD_AVB_RECOVERY_ADD_HASH_FOOTER_ARGS += \
-#    --prop com.android.build.boot.security_patch:$(PLATFORM_SECURITY_PATCH)
+
+# additions that are required for the 11.0 build manifest
+BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --set_hashtree_disabled_flag
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flag 2
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_PRODUCT := product
 #
