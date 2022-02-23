@@ -89,3 +89,5 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 #PRODUCT_COPY_FILES += \
 #    $(OUT_DIR)/target/product/miatoll/obj/SHARED_LIBRARIES/libandroidicu_intermediates/libandroidicu.so:$(TARGET_COPY_OUT_RECOVERY)/root/system/lib64/libandroidicu.so
 #
+TW_USE_FSCRYPT_POLICY := 1
+#
