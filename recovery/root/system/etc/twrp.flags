@@ -3,15 +3,7 @@
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
 # mount point  fstype  device                             device2                flags
-
-##/system 	ext4    	/dev/block/mapper/system 			    flags=display="System"
-###system        	/system         ext4    	ro,barrier=1,discard                wait,logical,first_stage_mount
-##vendor        	/vendor         ext4    	ro,barrier=1,discard                wait,logical,first_stage_mount
-##product       	/product        ext4    	ro,barrier=1,discard                wait,logical,first_stage_mount
-##system_ext    	/system_ext     ext4    	ro,barrier=1,discard                wait,logical,first_stage_mount
-
 /cache         	ext4    /dev/block/bootdevice/by-name/cache			  flags=display="Cache"
-#/data          	f2fs    /dev/block/bootdevice/by-name/userdata			  flags=fileencryption=ice:aes-256-cts;wrappedkey;keydirectory=/metadata/vold/metadata_encryption;encryptable=footer
 /boot          	emmc    /dev/block/bootdevice/by-name/boot
 /storage        ext4    /data/media/0                  		     		  flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable
 /persist_image 	emmc    /dev/block/bootdevice/by-name/persist                     flags=display="Persist_Image";backup=1;flashimg=1
