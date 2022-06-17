@@ -1,6 +1,6 @@
 #
 #	This file is part of the OrangeFox Recovery Project
-# 	Copyright (C) 2020-2021 The OrangeFox Recovery Project
+# 	Copyright (C) 2020-2022 The OrangeFox Recovery Project
 #
 #	OrangeFox is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@ FDEVICE="miatoll"
 #set -o xtrace
 
 fox_get_target_device() {
-local chkdev=$(echo "$BASH_SOURCE" | grep -w $FDEVICE)
+local chkdev=$(echo "$BASH_SOURCE" | grep -w \"$FDEVICE\")
    if [ -n "$chkdev" ]; then 
       FOX_BUILD_DEVICE="$FDEVICE"
    else
-      chkdev=$(set | grep BASH_ARGV | grep -w $FDEVICE)
+      chkdev=$(set | grep BASH_ARGV | grep -w \"$FDEVICE\")
       [ -n "$chkdev" ] && FOX_BUILD_DEVICE="$FDEVICE"
    fi
 }
@@ -42,6 +42,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 	export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 	export OF_USE_GREEN_LED=0
+	export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
 	export OF_HIDE_NOTCH=1
 	export OF_USE_MAGISKBOOT=1
 	export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1
@@ -78,7 +79,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_CLOCK_POS=1
 
 	# maximum permissible splash image size (in kilobytes); do *NOT* increase!
-	export OF_SPLASH_MAX_SIZE=104
+	export OF_SPLASH_MAX_SIZE=130
 
 	# run a process after formatting data to recreate /data/media/0 (only when forced-encryption is being disabled)
 	export OF_RUN_POST_FORMAT_PROCESS=1
