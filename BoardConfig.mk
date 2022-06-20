@@ -162,3 +162,10 @@ TW_INCLUDE_RESETPROP := true
 # include python, for ABX conversion
 TW_INCLUDE_PYTHON := true
 #
+
+ifeq ($(OF_DISABLE_WRAPPEDKEY),1)
+   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-no-wrappedkey.fstab
+else
+   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+endif
+#
