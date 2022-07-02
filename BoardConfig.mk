@@ -160,6 +160,13 @@ TARGET_COPY_OUT_PRODUCT := product
 TW_INCLUDE_RESETPROP := true
 #
 
+# cure for "ELF binaries" problems
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+
+# deal with "error: overriding commands for target" problems
+BUILD_BROKEN_DUP_RULES := true
+#
+# which variant?
 ifeq ($(OF_DISABLE_WRAPPEDKEY),1)
    TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-no-wrappedkey.fstab
 else
