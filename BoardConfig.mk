@@ -101,6 +101,12 @@ else
 endif
 #---
 
+ifeq ($(FOX_VARIANT),A12_FBEv2)
+   BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo-fbev2.img
+   TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image-fbev2.gz-dtb
+   BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIRECTORY)/dtb-fbev2
+endif
+
 # Avb
 BOARD_AVB_ENABLE := true
 BOARD_AVB_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
@@ -158,18 +164,21 @@ BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 2
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_PRODUCT := product
 TW_INCLUDE_RESETPROP := true
-#
 
 # cure for "ELF binaries" problems
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
 # deal with "error: overriding commands for target" problems
 BUILD_BROKEN_DUP_RULES := true
-#
-# which variant?
+
+# wrappedkey?
 ifeq ($(OF_DISABLE_WRAPPEDKEY),1)
    TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-no-wrappedkey.fstab
 else
    TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+endif
+
+ifeq ($(FOX_VARIANT),A12_FBEv2)
+   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-fbev2.fstab
 endif
 #

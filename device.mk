@@ -46,7 +46,11 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
 PRODUCT_SOONG_NAMESPACES += \
     vendor/qcom/opensource/commonsys-intf/display
 
-PRODUCT_SHIPPING_API_LEVEL := 29
+ifeq ($(FOX_VARIANT),A12_FBEv2)
+   PRODUCT_SHIPPING_API_LEVEL := 30
+else
+   PRODUCT_SHIPPING_API_LEVEL := 29
+endif
 
 # crypto
 TW_INCLUDE_CRYPTO := true
