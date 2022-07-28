@@ -21,6 +21,9 @@
 # fscrypt policy
 TW_USE_FSCRYPT_POLICY := 1
 
+# shipping API
+PRODUCT_SHIPPING_API_LEVEL := 29
+
 # dynamic partition stuff
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
@@ -47,9 +50,11 @@ PRODUCT_SOONG_NAMESPACES += \
     vendor/qcom/opensource/commonsys-intf/display
 
 ifeq ($(FOX_VARIANT),A12_FBEv2)
+  # fscrypt policy
+   TW_USE_FSCRYPT_POLICY := 2
+
+  # shipping API
    PRODUCT_SHIPPING_API_LEVEL := 30
-else
-   PRODUCT_SHIPPING_API_LEVEL := 29
 endif
 
 # crypto

@@ -81,30 +81,19 @@ BOARD_MKBOOTIMG_ARGS += --second_offset $(BOARD_KERNEL_SECOND_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 
-# --- prebuilt kernel
+# --- Prebuilt kernel
 BOARD_INCLUDE_RECOVERY_DTBO := true
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 KERNEL_DIRECTORY := $(DEVICE_PATH)/prebuilt
-
+BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo.img
+TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image.gz-dtb
 BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIRECTORY)/dtbs
 
-# stock miui kernel (V12.0.3.0.QJWMIXM_20210117)
-ifeq ($(FOX_VARIANT),MIUI)
-   KERNEL_DIRECTORY := $(DEVICE_PATH)/MIUI
-   BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo
-   TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/kernel
-   BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIRECTORY)/dtb
-# Yuki kernel, built from source
-else
-   BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo.img
-   TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image.gz-dtb
-endif
-#---
-
+# FBE v2; use lineage 19 prebuilt kernel
 ifeq ($(FOX_VARIANT),A12_FBEv2)
    BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo-fbev2.img
-   TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image-fbev2.gz-dtb
    BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIRECTORY)/dtb-fbev2
+   TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image-fbev2
 endif
 
 # Avb
@@ -153,6 +142,7 @@ TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 TW_EXCLUDE_TWRPAPP := true
 TW_NO_SCREEN_BLANK := true
+TW_SCREEN_BLANK_ON_BOOT := true
 
 # additions that are required for the 11.0 build manifest
 BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
@@ -171,14 +161,12 @@ BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 # deal with "error: overriding commands for target" problems
 BUILD_BROKEN_DUP_RULES := true
 
-# wrappedkey?
-ifeq ($(OF_DISABLE_WRAPPEDKEY),1)
-   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-no-wrappedkey.fstab
-else
-   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
-endif
-
+# FBE v1 or v2 ?
 ifeq ($(FOX_VARIANT),A12_FBEv2)
    TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-fbev2.fstab
+   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/root/system/etc/twrp-fbev2.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
+else
+   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/root/system/etc/twrp-fbev1.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
 endif
 #
