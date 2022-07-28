@@ -20,14 +20,17 @@
 ![Redmi Note 9S](https://camo.githubusercontent.com/ffd6c3fbdcb8e4cc6ed9ad884b32a9d5009d307a8bae29e760019f8457e8fcf5/68747470733a2f2f63646e2d66696c65732e6b696d6f76696c2e636f6d2f64656661756c742f303030342f33362f7468756d625f3333353731385f64656661756c745f6269672e6a706567 "Redmi Note 9S")
 
 ---
-## Kernel sources
+## Kernel (FBE v1)
 "https://github.com/Klozz/android_kernel_xiaomi_sm6250"
+
+## Kernel (FBE v2)
+"https://github.com/Positron-B/twrp_device_xiaomi_miatoll/tree/android-12.1/prebuilt"
 
 ---
 ## Copyright notice
  ```
   /*
-  *  Copyright (C) 2020-2021 The OrangeFox Recovery Project
+  *  Copyright (C) 2020-2022 The OrangeFox Recovery Project
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
