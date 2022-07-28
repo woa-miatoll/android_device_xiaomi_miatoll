@@ -92,6 +92,11 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	   export FOX_VARIANT="unwrap"
 	fi
 
+	# flashlight
+	if [ "$FOX_VARIANT" = "A12_FBEv2" ]; then
+	   export OF_FLASHLIGHT_ENABLE=0
+	fi
+
 	# let's see what are our build VARs
 	if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then
   	   export | grep "FOX" >> $FOX_BUILD_LOG_FILE
