@@ -52,6 +52,9 @@ PRODUCT_SOONG_NAMESPACES += \
 ifeq ($(FOX_VARIANT),A12_FBEv2)
   # fscrypt policy
    TW_USE_FSCRYPT_POLICY := 2
+
+  # Enable project quotas and casefolding for emulated storage without sdcardfs
+  $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 endif
 
 # crypto
