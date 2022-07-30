@@ -84,9 +84,6 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	# run a process after formatting data to recreate /data/media/0 (only when forced-encryption is being disabled)
 	export OF_RUN_POST_FORMAT_PROCESS=1
 
-	# ensure that /sdcard is bind-unmounted before f2fs data repair or format
-	export OF_UNBIND_SDCARD_F2FS=1
-
 	# disable wrappedkey?
 	if [ "$OF_DISABLE_WRAPPEDKEY" = "1" ]; then
 	   export FOX_VARIANT="unwrap"
