@@ -56,6 +56,9 @@ ifeq ($(FOX_VARIANT),A12_FBEv2)
   # Enable project quotas and casefolding for emulated storage without sdcardfs
   $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
+  # shipping API
+  PRODUCT_SHIPPING_API_LEVEL := 30
+
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.crypto.dm_default_key.options_format.version=2 \
     ro.crypto.volume.filenames_mode=aes-256-cts \
