@@ -22,13 +22,13 @@ DEVICE_PATH := device/xiaomi/miatoll
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, vendor/twrp/config/common.mk)
 $(call inherit-product, device/xiaomi/miatoll/device.mk)
+$(call inherit-product, vendor/twrp/config/common.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := miatoll
 PRODUCT_NAME := twrp_miatoll
 PRODUCT_BRAND := Xiaomi
-PRODUCT_MODEL := Redmi Note 9S
+PRODUCT_MODEL := SM6250
 PRODUCT_MANUFACTURER := Xiaomi
 #
