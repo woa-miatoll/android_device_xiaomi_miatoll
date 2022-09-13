@@ -18,6 +18,7 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/twrp_miatoll.mk
 
 COMMON_LUNCH_CHOICES := \
+    twrp_miatoll-user \
     twrp_miatoll-userdebug \
     twrp_miatoll-eng
 #
