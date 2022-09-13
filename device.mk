@@ -49,6 +49,9 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
 PRODUCT_SOONG_NAMESPACES += \
     vendor/qcom/opensource/commonsys-intf/display
 
+# device asserts
+TARGET_OTA_ASSERT_DEVICE := miatoll,curtana,excalibur,gram,joyeuse
+
 ifeq ($(FOX_VARIANT),A12_FBEv2)
   # fscrypt policy
    TW_USE_FSCRYPT_POLICY := 2
@@ -58,9 +61,6 @@ ifeq ($(FOX_VARIANT),A12_FBEv2)
 
   # shipping API
   PRODUCT_SHIPPING_API_LEVEL := 30
-
-  # device asserts
-  TARGET_OTA_ASSERT_DEVICE := miatoll,curtana,excalibur,gram,joyeuse
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.crypto.dm_default_key.options_format.version=2 \
