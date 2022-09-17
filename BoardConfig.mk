@@ -34,6 +34,7 @@ ENABLE_SCHEDBOOST := true
 
 # 64-bit
 TARGET_SUPPORTS_64_BIT_APPS := true
+TARGET_IS_64_BIT := true
 
 # Bootloader
 PRODUCT_PLATFORM := atoll
@@ -62,6 +63,7 @@ BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 \
 	androidboot.init_fatal_reboot_target=recovery
 
 BOARD_KERNEL_IMAGE_NAME := Image
+
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_BOOT_HEADER_VERSION := 2
 BOARD_KERNEL_BASE          := 0x00000000
@@ -82,19 +84,28 @@ BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 
 # --- Prebuilt kernel
-BOARD_INCLUDE_RECOVERY_DTBO := true
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-KERNEL_DIRECTORY := $(DEVICE_PATH)/prebuilt
-BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo.img
-TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image.gz-dtb
-BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIRECTORY)/dtbs
-
-# FBE v2; use lineage 19 prebuilt kernel
-ifeq ($(FOX_VARIANT),A12_FBEv2)
-   BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo-fbev2.img
-   BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIRECTORY)/dtb-fbev2
-   TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image-fbev2
-endif
+# whether to do an inline build of the kernel sources
+ifeq ($(FOX_BUILD_FULL_KERNEL_SOURCES),1)
+    TARGET_KERNEL_SOURCE := kernel/xiaomi/miatoll
+    TARGET_KERNEL_CONFIG := vendor/curtana-fox_defconfig
+    TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-gnu-
+    TARGET_KERNEL_ADDITIONAL_FLAGS := DTC_EXT=$(shell pwd)/prebuilts/misc/$(HOST_OS)-x86/dtc/dtc
+    TARGET_KERNEL_CLANG_COMPILE := true
+    KERNEL_SUPPORTS_LLVM_TOOLS := true
+    TARGET_KERNEL_CLANG_VERSION := 13.0.0
+    TARGET_KERNEL_CLANG_PATH := $(shell pwd)/prebuilts/clang/host/linux-x86/clang-$(TARGET_KERNEL_CLANG_VERSION)
+else
+    BOARD_INCLUDE_RECOVERY_DTBO := true
+    BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+    ifeq ($(FOX_VARIANT),A12_FBEv2)
+   	KERNEL_DIRECTORY := $(DEVICE_PATH)/prebuilt/fbev2
+    else
+    	KERNEL_DIRECTORY := $(DEVICE_PATH)/prebuilt
+    endif
+    BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_DIRECTORY)/dtbo.img
+    TARGET_PREBUILT_KERNEL := $(KERNEL_DIRECTORY)/Image.gz-dtb
+    BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_DIRECTORY)/dtbs
+endif # inline kernel build
 
 # Avb
 BOARD_AVB_ENABLE := true
@@ -119,9 +130,9 @@ BOARD_SUPPRESS_SECURE_ERASE := true
 # File systems
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
-
-# Workaround for error copying vendor files to recovery ramdisk
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 TARGET_COPY_OUT_VENDOR := vendor
 
 # Recovery
@@ -144,14 +155,15 @@ TW_EXCLUDE_TWRPAPP := true
 TW_NO_SCREEN_BLANK := true
 TW_SCREEN_BLANK_ON_BOOT := true
 
-# additions that are required for the 11.0 build manifest
+# AVB stuff
 BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --set_hashtree_disabled_flag
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 2
-BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+
+#
 TARGET_COPY_OUT_PRODUCT := product
 TW_INCLUDE_RESETPROP := true
 
@@ -161,7 +173,7 @@ BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 # deal with "error: overriding commands for target" problems
 BUILD_BROKEN_DUP_RULES := true
 
-# FBE v1 or v2 ?
+# FBEv1 or FBEv2 ?
 ifeq ($(FOX_VARIANT),A12_FBEv2)
    TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-fbev2.fstab
    PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/root/system/etc/twrp-fbev2.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
@@ -169,4 +181,7 @@ else
    TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
    PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/root/system/etc/twrp-fbev1.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
 endif
+#
+# debug for backups
+# TW_LIBTAR_DEBUG := true
 #
