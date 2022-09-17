@@ -87,8 +87,8 @@ local FBEv2=0;
     fi
 
     # cleanup
- #   rm -f $F;
- #   rm -f "/FFiles/temp/fstab.qcom";
+    rm -f $F;
+    # rm -f "/FFiles/temp/fstab.qcom";
 }
 
 # NOTE: this function is hard-coded for a handful of ROMs which, at the time of writing this script, 
@@ -143,7 +143,9 @@ local found=0;
     elif [ "$found" = "0" ]; then
        echo "I:OrangeFox: this ROM supports wrappedkey. Continuing with the default fstab" >> $LOGF;
     fi
- #   rm $F;
+
+    # cleanup
+    rm $F;
 }
 
 # ---
