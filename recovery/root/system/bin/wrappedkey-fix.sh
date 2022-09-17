@@ -42,7 +42,7 @@ local FBEv2=0;
     mkdir -p $D;
     mount -r $S $D;
     cp $D/build.prop $F;
-    cp $D/etc/fstab.qcom /tmp;
+    cp $D/etc/fstab.qcom /FFiles/temp/;
     umount $D;
     rmdir $D;
 
