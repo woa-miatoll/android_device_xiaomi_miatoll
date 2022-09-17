@@ -23,6 +23,7 @@
 # system and vendor in some zip installers and in the gui
 #
 
+# requires bash
 set_read_write_partitions() {
   local F=$(getprop "ro.orangefox.fastbootd");
   [ "$F" = "1" ] && return; # don't run this in fastbootd mode
