@@ -24,7 +24,7 @@
 "https://github.com/Klozz/android_kernel_xiaomi_sm6250"
 
 ## Kernel (FBE v2)
-"https://github.com/Positron-B/twrp_device_xiaomi_miatoll/tree/android-12.1/prebuilt"
+"https://github.com/ProjectVelvet/android_kernel_sm6250.git"
 
 ---
 ## Copyright notice
