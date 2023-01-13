@@ -175,11 +175,15 @@ BUILD_BROKEN_DUP_RULES := true
 
 # FBEv1 or FBEv2 ?
 ifeq ($(FOX_VARIANT),FBEv2)
-   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-fbev2.fstab
-   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/root/system/etc/twrp-fbev2.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
+   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/FBEv2/recovery-fbev2.fstab
+   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv2/recovery-fbev2-wrap0.fstab:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/recovery-fbev2-wrap0.fstab
+   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv2/twrp-fbev2.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
+   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv2/wrappedkey-fix-fbev2.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/wrappedkey-fix.sh
 else
-   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
-   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/root/system/etc/twrp-fbev1.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
+   TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/FBEv1/recovery-fbev1.fstab
+   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv1/recovery-fbev1.fstab:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/recovery-fbev1.fstab
+   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv1/twrp-fbev1.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
+   PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv1/wrappedkey-fix-fbev1.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/wrappedkey-fix.sh
 endif
 #
 # debug for backups
