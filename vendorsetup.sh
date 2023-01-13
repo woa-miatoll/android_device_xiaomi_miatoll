@@ -1,6 +1,6 @@
 #
 #	This file is part of the OrangeFox Recovery Project
-# 	Copyright (C) 2020-2022 The OrangeFox Recovery Project
+# 	Copyright (C) 2020-2023 The OrangeFox Recovery Project
 #
 #	OrangeFox is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 # 	Please maintain this if you use this script or any part of it
 #
 FDEVICE="miatoll"
-#set -o xtrace
 
 fox_get_target_device() {
 local chkdev=$(echo "$BASH_SOURCE" | grep -w \"$FDEVICE\")
@@ -92,7 +91,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	fi
 
 	# FBEv2
-	if [ "$FOX_VARIANT" = "A12_FBEv2" ]; then
+	if [ "$FOX_VARIANT" = "FBEv2" ]; then
 	   export OF_FLASHLIGHT_ENABLE=0
 	else
 	   export OF_PATCH_AVB20=1

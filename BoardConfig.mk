@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2019 The TwrpBuilder Open-Source Project
 #
-# Copyright (C) 2020-2022 OrangeFox Recovery Project
+# Copyright (C) 2020-2023 OrangeFox Recovery Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -97,7 +97,7 @@ ifeq ($(FOX_BUILD_FULL_KERNEL_SOURCES),1)
 else
     BOARD_INCLUDE_RECOVERY_DTBO := true
     BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-    ifeq ($(FOX_VARIANT),A12_FBEv2)
+    ifeq ($(FOX_VARIANT),FBEv2)
    	KERNEL_DIRECTORY := $(DEVICE_PATH)/prebuilt/fbev2
     else
     	KERNEL_DIRECTORY := $(DEVICE_PATH)/prebuilt
@@ -174,7 +174,7 @@ BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_DUP_RULES := true
 
 # FBEv1 or FBEv2 ?
-ifeq ($(FOX_VARIANT),A12_FBEv2)
+ifeq ($(FOX_VARIANT),FBEv2)
    TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery-fbev2.fstab
    PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/root/system/etc/twrp-fbev2.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
 else

@@ -1,7 +1,7 @@
 #!/system/bin/sh
 #
 #	This file is part of the OrangeFox Recovery Project
-# 	Copyright (C) 2022 The OrangeFox Recovery Project
+# 	Copyright (C) 2022-2023 The OrangeFox Recovery Project
 #
 #	OrangeFox is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -115,10 +115,19 @@ local found=0;
     [ -z "$SDK" ] && SDK=$(file_getprop "$F" "ro.system.build.version.sdk");
     [ -z "$SDK" ] && SDK=$(file_getprop "$F" "ro.vendor.build.version.sdk");
 
-    # assume for the moment that no A13 ROM supports wrappedkey
+    # assume for the moment that A13 ROMs don't support wrappedkey
     if [ -n "$SDK" -a $SDK -ge 33 ]; then
 	found=1;
 	echo "I:OrangeFox: ROM SDK=$SDK" >> $LOGF;
+
+	# except these A13 ROMs (for now)
+	if [ -n "$(grep ro.catalyst. $F)" ]; then
+	 	found=0;
+    	elif [ -n "$(grep ro.cherish. $F)" ]; then
+    		found=0;
+    	elif [ -n "$(grep ro.xtended. $F)" ]; then
+    		found=0;
+    	fi
     fi
 
     # miatoll A12 ROMs that don't support wrappedkey (as of the date of writing this script)
@@ -152,9 +161,9 @@ local found=0;
 #echo "I:OrangeFox: running $0" >> $LOGF;
 V=$(getprop "ro.orangefox.variant");
 
-[ "$V" = "A12_FBEv2" ] && get_API;
+[ "$V" = "FBEv2" ] && get_API;
 
 fix_unwrap_decryption;
 
-[ "$V" != "A12_FBEv2" ] && get_API;
+[ "$V" != "FBEv2" ] && get_API;
 exit 0;
