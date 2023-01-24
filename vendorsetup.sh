@@ -43,9 +43,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_USE_GREEN_LED=0
 	export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
 	export OF_HIDE_NOTCH=1
-	export OF_USE_MAGISKBOOT=1
 	export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1
-	export FOX_USE_SPECIFIC_MAGISK_ZIP=~/Magisk/Magisk-v25.2.zip
 	export OF_DONT_PATCH_ENCRYPTED_DEVICE=1
 	export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
 	export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
@@ -76,11 +74,6 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 
 	# ensure that /sdcard is bind-unmounted before f2fs data repair or format (required for FBE v1)
 	export OF_UNBIND_SDCARD_F2FS=1
-
-	# disable wrappedkey?
-	if [ "$OF_DISABLE_WRAPPEDKEY" = "1" ]; then
-	   export FOX_VARIANT="unwrap"
-	fi
 
 	# FBEv2
 	if [ "$FOX_VARIANT" = "FBEv2" ]; then
