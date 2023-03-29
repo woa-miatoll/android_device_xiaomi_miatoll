@@ -21,9 +21,9 @@
 
 ---
 ## Kernels
-- [FBE v1]("https://github.com/Klozz/android_kernel_xiaomi_sm6250")
+- [FBE v1](https://github.com/Klozz/android_kernel_xiaomi_sm6250)
 
-- [FBE v2]("https://github.com/LeddaZ/android_kernel_xiaomi_sm6250.git")
+- [FBE v2](https://github.com/LeddaZ/android_kernel_xiaomi_sm6250.git)
 
 ---
 ## Copyright notice
