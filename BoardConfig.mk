@@ -143,17 +143,20 @@ TW_THEME := portrait_hdpi
 RECOVERY_SDCARD_ON_DATA := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_EXTRA_LANGUAGES := true
+TW_DEFAULT_LANGUAGE := en
 TW_INCLUDE_NTFS_3G := true
 TW_USE_TOOLBOX := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
-TW_MAX_BRIGHTNESS := 2047
-TW_DEFAULT_BRIGHTNESS := 1200
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 TW_EXCLUDE_TWRPAPP := true
 TW_NO_SCREEN_BLANK := true
 TW_SCREEN_BLANK_ON_BOOT := true
+
+# building
+LC_ALL := C
+ALLOW_MISSING_DEPENDENCIES := true
 
 # AVB stuff
 BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
@@ -179,11 +182,15 @@ ifeq ($(FOX_VARIANT),FBEv2)
    PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv2/recovery-fbev2-wrap0.fstab:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/recovery-fbev2-wrap0.fstab
    PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv2/twrp-fbev2.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
    PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv2/wrappedkey-fix-fbev2.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/wrappedkey-fix.sh
+   TW_MAX_BRIGHTNESS := 4095
+   TW_DEFAULT_BRIGHTNESS := 1638
 else
    TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/FBEv1/recovery-fbev1.fstab
    PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv1/recovery-fbev1.fstab:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/recovery-fbev1.fstab
    PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv1/twrp-fbev1.flags:$(TARGET_COPY_OUT_RECOVERY)/root/system/etc/twrp.flags
    PRODUCT_COPY_FILES += $(DEVICE_PATH)/recovery/FBEv1/wrappedkey-fix-fbev1.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/wrappedkey-fix.sh
+   TW_MAX_BRIGHTNESS := 2047
+   TW_DEFAULT_BRIGHTNESS := 1200
 endif
 #
 # debug for backups
