@@ -44,10 +44,11 @@ OF_RUN_POST_FORMAT_PROCESS := 1
 # ensure that /sdcard is bind-unmounted before f2fs data repair or format (required for FBE v1)
 OF_UNBIND_SDCARD_F2FS := 1
 
+# dispense with flashlight on both variants
+OF_FLASHLIGHT_ENABLE := 0
+
 # FBEv2
 ifeq ($(FOX_VARIANT),FBEv2)
-   	OF_FLASHLIGHT_ENABLE := 0
-
 	# no additional check for MIUI props
         OF_NO_ADDITIONAL_MIUI_PROPS_CHECK := 1
 
