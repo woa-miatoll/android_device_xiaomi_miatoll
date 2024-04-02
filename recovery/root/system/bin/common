@@ -1,0 +1,46 @@
+#!/sbin/bash
+win=/dev/block/sda19
+esp=/dev/block/sda20
+removeparts(){ for i in 20 19 18; do parted -s /dev/block/sda rm $i 2>/dev/null; done }
+formatwinesp(){
+mkfs.fat -F32 -s1 $esp -n ESPMIATOLL
+mkfs.ntfs -f $win -L WINMIATOLL
+}
+formatdata(){
+mke2fs -F -t ext4 /dev/block/sda18
+mke2fs -F -t ext4 /dev/block/by-name/metadata
+mke2fs -F -t ext4 /dev/block/by-name/cache
+}
+restore(){
+removeparts
+parted -s /dev/block/sda mkpart userdata ext4 10.9GB $max"GB"
+sgdisk --resize-table 32 /dev/block/sda
+sync
+formatdata
+}
+if getprop sys.usb.config|grep -q "mtp"; then
+echo "run the script again!";sleep 1
+setprop sys.usb.config adb
+rm /config/usb_gadget/g1/configs/b.1/f*
+exit
+fi
+blocksize=$(blockdev --getsize64 /dev/block/sda)
+if [[ $blocksize =~ ^574[0-9]{8}$ ]]; then max=57.5
+elif [[ $blocksize =~ ^123[0-9]{9}$ ]]; then max=123
+else echo "is this miatoll?"; exit 1
+fi
+for i in sdcard data; do umount -lf /$i 2> /dev/null; done
+for i in esp win cache metadata; do umount -lf /dev/block/by-name/$i 2> /dev/null; done
+if [ "$ignoreweirdness" != true ]; then
+weirdparts=$(find_ /dev/block -regextype posix-extended -type b -regex '.*/sda(2[1-9]|[3-9][0-9])$')
+if [ -n "$weirdparts" ]; then
+echo -n "in order to use this script, your partition table has to be restored to the stock variant. ALL DATA WILL BE LOST. continue (y/n)? "
+read yn
+[[ $yn =~ ^[Yy].*$ ]] || { echo "can't proceed without restoring the table.";exit 1;}
+echo "restoring the stock partition layout now"
+for i in $weirdparts; do
+f="${i:14}"
+parted -s /dev/block/sda rm $f 2>/dev/null; done
+restore
+exit 0; fi
+fi
