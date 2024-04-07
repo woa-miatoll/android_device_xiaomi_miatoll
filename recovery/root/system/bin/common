@@ -25,7 +25,7 @@ rm /config/usb_gadget/g1/configs/b.1/f*
 exit
 fi
 blocksize=$(blockdev --getsize64 /dev/block/sda)
-if [[ $blocksize =~ ^574[0-9]{8}$ ]]; then max=57.5
+if [[ $blocksize =~ ^593[0-9]{8}$ ]]; then max=59.3
 elif [[ $blocksize =~ ^123[0-9]{9}$ ]]; then max=123
 else echo "is this miatoll?"; exit 1
 fi
