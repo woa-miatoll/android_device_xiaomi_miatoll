@@ -26,7 +26,7 @@ exit
 fi
 blocksize=$(blockdev --getsize64 /dev/block/sda)
 if [[ $blocksize =~ ^593[0-9]{8}$ ]]; then max=59.3
-elif [[ $blocksize =~ ^1235[0-9]{8}$ ]]; then max=123.5
+elif [[ $blocksize =~ ^1233[0-9]{8}$ ]]; then max=123.3
 else echo "is this miatoll?"; exit 1
 fi
 for i in sdcard data; do umount -lf /$i 2> /dev/null; done
